@@ -114,3 +114,32 @@ void showOutStandingTask(Tarea **task,int id){
         printf("la duracion estimada de la tarea es:%d\n",(*task)->Duracion);
     } 
 }
+
+Tarea* searchTask(Tarea **task, Tarea **task_completed,int quantity){
+    char *buff;
+    char *needle;
+    buff = (char*) malloc(sizeof(char)*MAX);
+    printf("ingrese la palabra clave de la tarea que busca:\n");
+    gets(buff);
+    needle = (char*)malloc(sizeof(char)*(strlen(buff)+1));
+    strcpy(needle,buff);
+    free(buff);
+    for (int id = 0; id < quantity; id++)
+    {
+        char *result = strstr((*(task+id))->Descripcion,needle);
+        char *result_x = strstr((*(task_completed+id))->Descripcion,needle);
+        if (*result != NULL)
+        {
+            return(*task);
+        }else
+        {
+            if (*result_x != NULL)
+            {
+                return(*task_completed);
+            }
+        } 
+    }
+    Tarea *aux=(Tarea*) malloc(sizeof(Tarea));    
+    (aux)->TareaID = -1;
+    return(aux);  
+} 
